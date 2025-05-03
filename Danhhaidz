@@ -1,4 +1,12 @@
-local lp = game.Players.LocalPlayer
+Workspace.Map_Pirate_Chests:GetChildren()
+
+local areas = {
+    "Colosseum", "Desert", "Fishmen", "Fountain",
+    "Ice", "Jungle", "Magma", "MarineBase",
+    "MarineStart", "MobBoss", "Pirate", "Prison",
+    "Sky", "SkyArea1", "SkyArea2", "TeleportSpawn",
+    "Town", "Windmill"
+}
 
 local areas = {
     "Colosseum", "Desert", "Fountain",
@@ -13,8 +21,19 @@ local function teleportToChest(area, index)
         local chests = chestPath:FindFirstChild("Chests")
         if chests then
             local targetChest = chests:GetChildren()[index]
-            if targetChest and targetChest:IsA("BasePart") then
+            if targetChest and targetChest:ISA("BasePart") then
                 lp.Character.HumanoidRootPart.CFrame = targetChest.CFrame
+            end
+        end
+    end
+end
+
+local function mainLoop()
+    while true do
+        for _, area in ipairs(areas) do
+            for index = 1, 18 do
+                teleportToChest(area, index)
+                wait(0.1)
             end
         end
     end
@@ -26,8 +45,8 @@ local function resetCharacter()
 end
 
 local function mainLoop()
-    local count = 0
     while true do
+        local startTime = tick()
         for _, area in ipairs(areas) do
             for index = 1, 18 do
                 teleportToChest(area, index)
@@ -46,5 +65,3 @@ local function mainLoop()
         end
     end
 end
-
-mainLoop()
